@@ -1,0 +1,17 @@
+#herosection{
+  background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20231012/pngtree-rustic-wooden-texture-as-a-captivating-background-image_13647442.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 88vh;
+}
+.addbtn{
+  height: 80px;
+}
+.addbtn img{
+  height: 70px;
+  border-radius: 10px;
+}
+.addbtn img:hover{
+  height: 80px;
+  border-radius: 10px;
+}
