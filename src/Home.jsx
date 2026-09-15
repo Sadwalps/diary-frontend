@@ -97,7 +97,7 @@ function Home() {
 
             {/* footer */}
             <div className='container-fluid bg-light py-4 text-dark' style={{fontFamily:"cursive"}}>
-             <marquee behavior="" direction=""><h4>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, natus.</h4></marquee> 
+             <marquee behavior="" direction=""><h4>"A quiet space for your loudest thoughts, deepest dreams, and daily moments."</h4></marquee> 
             </div>
 
         </>
