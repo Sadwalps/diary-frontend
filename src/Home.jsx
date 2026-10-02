@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import Edit from './Edit';
 import Delete from './Delete';
+import { addDiaryDataApi } from './service/allApi';
 function Home() {
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -19,6 +20,29 @@ function Home() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [diaryData, setDiaryData] = useState({
+        title: "",
+        description: "",
+        date: ""
+    })
+    console.log(diaryData);
+
+    const handleAdd = async () => {
+        const { title, description, date } = diaryData
+        console.log(title, description, date);
+        if (!title || !description || !date) {
+            const reqBody = new FormData()
+            reqBody.append('title', title)
+            reqBody.append('description', description)
+            reqBody.append('date', date)
+            const result = await addDiaryDataApi(reqBody)
+            alert(`Fill the form completely`)
+        } else {
+            alert(`Sucess`)
+        }
+    }
+   
+
     return (
         <>
             {/* Navbar */}
@@ -50,18 +74,18 @@ function Home() {
                 </OverlayTrigger>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{fontFamily:"cursive"}}>Add Your Notes</Modal.Title>
+                        <Modal.Title style={{ fontFamily: "cursive" }}>Add Your Notes</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{fontFamily:"cursive"}}>
-                        <input className='form-control ' type="text" placeholder='Title'  />
-                        <textarea className='form-control mt-2' name="" id="" placeholder='Description' ></textarea>
-                        <input className='form-control mt-2' type="date" placeholder='Select Date'  />
+                    <Modal.Body style={{ fontFamily: "cursive" }}>
+                        <input value={diaryData.title} onChange={(e) => setDiaryData({ ...diaryData, title: e.target.value })} className='form-control ' type="text" placeholder='Title' />
+                        <textarea value={diaryData.description} onChange={(e) => setDiaryData({ ...diaryData, description: e.target.value })} className='form-control mt-2' name="" id="" placeholder='Description' ></textarea>
+                        <input value={diaryData.date} onChange={(e) => setDiaryData({ ...diaryData, date: e.target.value })} className='form-control mt-2' type="date" placeholder='Select Date' />
                     </Modal.Body>
-                    <Modal.Footer style={{fontFamily:"cursive"}}>
+                    <Modal.Footer style={{ fontFamily: "cursive" }}>
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={handleAdd}>
                             Add
                         </Button>
                     </Modal.Footer>
@@ -79,9 +103,9 @@ function Home() {
                             <Card className='mt-lg-3 mt-2'>
                                 <Card.Body className=''>
                                     <div className='d-flex justify-content-between w-100'>
-                                        <Edit/>
+                                        <Edit />
                                         <h3 style={{ fontFamily: "cursive" }}>text</h3>
-                                       <Delete/>
+                                        <Delete />
                                     </div>
                                     <h4 className='mt-2' style={{ fontFamily: "cursive" }}>Date:52391823</h4>
                                     <h5 style={{ fontFamily: "cursive" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ex debitis, quia quam temporibus expedita esse sapiente quos omnis, possimus nesciunt reiciendis cumque labore, veniam quod dignissimos inventore voluptas eaque saepe voluptatibus corporis perferendis! Qui ab, non tempora perferendis ad dolorem similique. Accusantium maiores placeat at hic minima? Nesciunt error amet fugiat necessitatibus? Doloremque quae exercitationem dolorum ipsa architecto reiciendis voluptas sed. Reiciendis deleniti voluptatem aperiam sunt necessitatibus aut tenetur quisquam sapiente, porro eum eos fuga dolor repudiandae esse sint, repellendus nobis iure itaque, fugiat molestiae! Architecto ipsum animi dicta porro atque! Numquam cupiditate explicabo ex, voluptas deserunt incidunt eaque!</h5>
@@ -96,8 +120,8 @@ function Home() {
             </div>
 
             {/* footer */}
-            <div className='container-fluid bg-light py-4 text-dark' style={{fontFamily:"cursive"}}>
-             <marquee behavior="" direction=""><h4>"A quiet space for your loudest thoughts, deepest dreams, and daily moments."</h4></marquee> 
+            <div className='container-fluid bg-light py-4 text-dark' style={{ fontFamily: "cursive" }}>
+                <marquee behavior="" direction=""><h4>"A quiet space for your loudest thoughts, deepest dreams, and daily moments."</h4></marquee>
             </div>
 
         </>
