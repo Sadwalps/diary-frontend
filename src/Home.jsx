@@ -18,7 +18,10 @@ function Home() {
     );
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        handleCancel()
+    }
     const handleShow = () => setShow(true);
     const [diaryData, setDiaryData] = useState({
         title: "",
@@ -31,17 +34,34 @@ function Home() {
         const { title, description, date } = diaryData
         console.log(title, description, date);
         if (!title || !description || !date) {
+
+            alert(`Fill the form completely`)
+        } else {
             const reqBody = new FormData()
             reqBody.append('title', title)
             reqBody.append('description', description)
             reqBody.append('date', date)
             const result = await addDiaryDataApi(reqBody)
-            alert(`Fill the form completely`)
-        } else {
-            alert(`Sucess`)
+            if (result.status == 200) {
+                alert(`Diary Successfully added`)
+                setTimeout(() => {
+                    handleClose()
+                }, 1000)
+            } else if (result.status == 406) {
+                alert(`You already added diary on this day`)
+            } else {
+                alert(`Something went wrong`)
+            }
         }
     }
-   
+
+    const handleCancel = () => {
+        setDiaryData({
+            title: "",
+            description: "",
+            date: ""
+        })
+    }
 
     return (
         <>
@@ -82,7 +102,7 @@ function Home() {
                         <input value={diaryData.date} onChange={(e) => setDiaryData({ ...diaryData, date: e.target.value })} className='form-control mt-2' type="date" placeholder='Select Date' />
                     </Modal.Body>
                     <Modal.Footer style={{ fontFamily: "cursive" }}>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={handleCancel}>
                             Cancel
                         </Button>
                         <Button variant="primary" onClick={handleAdd}>
