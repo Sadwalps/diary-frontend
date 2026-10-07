@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -9,8 +9,13 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import Edit from './Edit';
 import Delete from './Delete';
-import { addDiaryDataApi } from './service/allApi';
+import { addDiaryDataApi, getDiaryDataApi } from './service/allApi';
 function Home() {
+
+    const [datas, setDatas] = useState([])
+    console.log(datas);
+    const [addDiaryStatus, setAddDiaryStatus] = useState([])
+
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Click here to add
@@ -47,13 +52,17 @@ function Home() {
                 setTimeout(() => {
                     handleClose()
                 }, 1000)
+                setAddDiaryStatus(result)
             } else if (result.status == 406) {
                 alert(`You already added diary on this day`)
+
             } else {
                 alert(`Something went wrong`)
             }
         }
     }
+    console.log(addDiaryStatus);
+
 
     const handleCancel = () => {
         setDiaryData({
@@ -62,6 +71,18 @@ function Home() {
             date: ""
         })
     }
+
+    const getalldiarydatas = async () => {
+        const result = await getDiaryDataApi()
+        if (result.status == 200) {
+            setDatas(result.data)
+        }
+    }
+
+    useEffect(() => {
+        getalldiarydatas()
+    }, [addDiaryStatus])
+
 
     return (
         <>
@@ -116,26 +137,30 @@ function Home() {
             <div className='py-4'>
                 <h2 className='mt-lg-4 mt-2 text-center'>All Notes</h2>
 
-                <div className='container-fluid'>
-                    <div className="row">
+             { datas.length>0? <div className='container-fluid'>
+                    {datas?.map((item) => (<div className="row">
                         <div className="col-md-1"></div>
                         <div className="col-md-10">
                             <Card className='mt-lg-3 mt-2'>
                                 <Card.Body className=''>
                                     <div className='d-flex justify-content-between w-100'>
                                         <Edit />
-                                        <h3 style={{ fontFamily: "cursive" }}>text</h3>
+                                        <h3 style={{ fontFamily: "cursive" }}>{item?.title}</h3>
                                         <Delete />
                                     </div>
-                                    <h4 className='mt-2' style={{ fontFamily: "cursive" }}>Date:52391823</h4>
-                                    <h5 style={{ fontFamily: "cursive" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ex debitis, quia quam temporibus expedita esse sapiente quos omnis, possimus nesciunt reiciendis cumque labore, veniam quod dignissimos inventore voluptas eaque saepe voluptatibus corporis perferendis! Qui ab, non tempora perferendis ad dolorem similique. Accusantium maiores placeat at hic minima? Nesciunt error amet fugiat necessitatibus? Doloremque quae exercitationem dolorum ipsa architecto reiciendis voluptas sed. Reiciendis deleniti voluptatem aperiam sunt necessitatibus aut tenetur quisquam sapiente, porro eum eos fuga dolor repudiandae esse sint, repellendus nobis iure itaque, fugiat molestiae! Architecto ipsum animi dicta porro atque! Numquam cupiditate explicabo ex, voluptas deserunt incidunt eaque!</h5>
+                                    <h4 className='mt-2' style={{ fontFamily: "cursive" }}>Date:{item?.date}</h4>
+                                    <h5 style={{ fontFamily: "cursive" }}>{item?.description}</h5>
                                 </Card.Body>
                             </Card>
                         </div>
                         <div className="col-md-1"></div>
-                    </div>
+                    </div>))}
 
-                </div>
+                </div>:
+
+                <div className='container-fluid d-flex justify-content-center align-items-center' style={{minHeight:"50vh"}}>
+                    <h2 style={{ fontFamily: "cursive" }} className='text-info'>Diary is empty !!!</h2>
+                </div>}
 
             </div>
 
