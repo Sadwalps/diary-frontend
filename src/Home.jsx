@@ -15,6 +15,7 @@ function Home() {
     const [datas, setDatas] = useState([])
     console.log(datas);
     const [addDiaryStatus, setAddDiaryStatus] = useState([])
+    const [deletestatus, setDeleteStatus] = useState("")
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -81,7 +82,7 @@ function Home() {
 
     useEffect(() => {
         getalldiarydatas()
-    }, [addDiaryStatus])
+    }, [addDiaryStatus,deletestatus])
 
 
     return (
@@ -146,7 +147,7 @@ function Home() {
                                     <div className='d-flex justify-content-between w-100'>
                                         <Edit />
                                         <h3 style={{ fontFamily: "cursive" }}>{item?.title}</h3>
-                                        <Delete />
+                                        <Delete item={item} setDeleteStatus={setDeleteStatus}/>
                                     </div>
                                     <h4 className='mt-2' style={{ fontFamily: "cursive" }}>Date:{item?.date}</h4>
                                     <h5 style={{ fontFamily: "cursive" }}>{item?.description}</h5>

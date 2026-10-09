@@ -10,3 +10,8 @@ export const addDiaryDataApi = async (reqBody) => {
 export const getDiaryDataApi = async () => {
     return await commonApi('GET', `${serverURL}/get-diary-data`, "")
 }
+
+//Api for delete diary data
+export const deleteDiaryDataApi = async (id) => {
+    return await commonApi('DELETE', `${serverURL}/delete-diary-data/${id}`, {})
+}
