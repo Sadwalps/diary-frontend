@@ -15,3 +15,8 @@ export const getDiaryDataApi = async () => {
 export const deleteDiaryDataApi = async (id) => {
     return await commonApi('DELETE', `${serverURL}/delete-diary-data/${id}`, {})
 }
+
+//Api for edit diary data
+export const editDiaryDataApi = async(id, reqBody)=>{
+return await commonApi('PUT', `${serverURL}/edit-diary-data/${id}`, reqBody)
+}

@@ -16,6 +16,7 @@ function Home() {
     console.log(datas);
     const [addDiaryStatus, setAddDiaryStatus] = useState([])
     const [deletestatus, setDeleteStatus] = useState("")
+    const [editStatus, setEditStatus] = useState("")
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -82,7 +83,7 @@ function Home() {
 
     useEffect(() => {
         getalldiarydatas()
-    }, [addDiaryStatus,deletestatus])
+    }, [addDiaryStatus, deletestatus, editStatus])
 
 
     return (
@@ -138,16 +139,16 @@ function Home() {
             <div className='py-4'>
                 <h2 className='mt-lg-4 mt-2 text-center'>All Notes</h2>
 
-             { datas.length>0? <div className='container-fluid'>
+                {datas.length > 0 ? <div className='container-fluid'>
                     {datas?.map((item) => (<div className="row">
                         <div className="col-md-1"></div>
                         <div className="col-md-10">
                             <Card className='mt-lg-3 mt-2'>
                                 <Card.Body className=''>
                                     <div className='d-flex justify-content-between w-100'>
-                                        <Edit />
+                                        <Edit item={item} setEditStatus={setEditStatus} />
                                         <h3 style={{ fontFamily: "cursive" }}>{item?.title}</h3>
-                                        <Delete item={item} setDeleteStatus={setDeleteStatus}/>
+                                        <Delete item={item} setDeleteStatus={setDeleteStatus} />
                                     </div>
                                     <h4 className='mt-2' style={{ fontFamily: "cursive" }}>Date:{item?.date}</h4>
                                     <h5 style={{ fontFamily: "cursive" }}>{item?.description}</h5>
@@ -157,11 +158,11 @@ function Home() {
                         <div className="col-md-1"></div>
                     </div>))}
 
-                </div>:
+                </div> :
 
-                <div className='container-fluid d-flex justify-content-center align-items-center' style={{minHeight:"50vh"}}>
-                    <h2 style={{ fontFamily: "cursive" }} className='text-info'>Diary is empty !!!</h2>
-                </div>}
+                    <div className='container-fluid d-flex justify-content-center align-items-center' style={{ minHeight: "50vh" }}>
+                        <h2 style={{ fontFamily: "cursive" }} className='text-info'>Diary is empty !!!</h2>
+                    </div>}
 
             </div>
 
