@@ -11,7 +11,6 @@ import Edit from './Edit';
 import Delete from './Delete';
 import { addDiaryDataApi, getDiaryDataApi } from './service/allApi';
 function Home() {
-
     const [datas, setDatas] = useState([])
     console.log(datas);
     const [addDiaryStatus, setAddDiaryStatus] = useState([])
@@ -23,6 +22,7 @@ function Home() {
             Click here to add
         </Tooltip>
     );
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
@@ -30,6 +30,7 @@ function Home() {
         handleCancel()
     }
     const handleShow = () => setShow(true);
+
     const [diaryData, setDiaryData] = useState({
         title: "",
         description: "",
@@ -65,7 +66,6 @@ function Home() {
     }
     console.log(addDiaryStatus);
 
-
     const handleCancel = () => {
         setDiaryData({
             title: "",
@@ -85,7 +85,6 @@ function Home() {
         getalldiarydatas()
     }, [addDiaryStatus, deletestatus, editStatus])
 
-
     return (
         <>
             {/* Navbar */}
@@ -99,7 +98,6 @@ function Home() {
                             height="30"
                             className="d-inline-block align-top"
                         />{' '}
-
                     </Navbar.Brand>
                     <h2 style={{ fontFamily: "cursive" }} className='text-dark'>Diary</h2>
                 </Container>
@@ -133,12 +131,10 @@ function Home() {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
             </div>
             {/* Body section */}
             <div className='py-4'>
                 <h2 className='mt-lg-4 mt-2 text-center'>All Notes</h2>
-
                 {datas.length > 0 ? <div className='container-fluid'>
                     {datas?.map((item) => (<div className="row">
                         <div className="col-md-1"></div>
@@ -157,20 +153,16 @@ function Home() {
                         </div>
                         <div className="col-md-1"></div>
                     </div>))}
-
                 </div> :
-
                     <div className='container-fluid d-flex justify-content-center align-items-center' style={{ minHeight: "50vh" }}>
                         <h2 style={{ fontFamily: "cursive" }} className='text-info'>Diary is empty !!!</h2>
                     </div>}
-
             </div>
 
             {/* footer */}
             <div className='container-fluid bg-light py-4 text-dark' style={{ fontFamily: "cursive" }}>
                 <marquee behavior="" direction=""><h4>"A quiet space for your loudest thoughts, deepest dreams, and daily moments."</h4></marquee>
             </div>
-
         </>
     )
 }

@@ -32,14 +32,11 @@ function Delete({ item, setDeleteStatus }) {
           <h4>Do you want to Delete  </h4>
         </Modal.Body>
         <Modal.Footer style={{ fontFamily: "cursive" }}>
-
           <Button variant="danger" onClick={() => handleDelete(item?._id)}>
             Confirm
           </Button>
         </Modal.Footer>
-
       </Modal>
-
     </>
   )
 }
